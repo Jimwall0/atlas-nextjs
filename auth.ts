@@ -11,7 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     buttonText: "#ffffff",
   },
   providers: [
-    Credentials({
+  Credentials({
       credentials: {
         email: {
           label: "Email",
@@ -22,9 +22,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
       },
       //@ts-ignore
-      authorize: async (credentials: {email: string; password: string;}) => {
+      authorize: async (credentials: { email: string; password: string }) => {
         const { email, password } = credentials;
-        console.log(email);
         const user = await fetchUser(email);
         if (!user) return null; //@ts-ignore
         const passwordsMatch = await bcrypt.compare(password, user.password);
