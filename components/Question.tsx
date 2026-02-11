@@ -1,4 +1,5 @@
 import VoteButton from "./VoteButton";
+import Link from "next/link";
 
 type QuestionProps = {
   id: string;
@@ -12,7 +13,7 @@ export function Question({ id, text, votes }: QuestionProps) {
       <div className="mr-2 rounded-xl bg-secondary px-2 text-sm text-white">
         {votes}
       </div>
-      <p className="text w-full text-left font-semibold">{text}</p>
+      <Link href={`ui/quesiton/${id}`}><p className="text w-full text-left font-semibold">{text}</p></Link>
       <VoteButton id={id} />
     </div>
   );

@@ -19,3 +19,10 @@ export type Question = {
   topic_id: string;
   votes: number;
 };
+
+export type Answers = {
+  id: string;
+  question_id: string;
+  text: string;
+  check: boolean;
+}
