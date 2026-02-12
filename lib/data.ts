@@ -100,10 +100,10 @@ export async function incrementVotes(id: string) {
   }
 }
 
-export async function insertAnswerToDb(answer: { text: string; question_id: string}) {
+export async function insertAnswerToDb(answer: { answer: string; question_id: string}) {
   const data = await sql`
-  INSERT INTO answers (text, question_id)
-  Values (${answer.text}, ${answer.question_id})
+  INSERT INTO answers (answer, question_id)
+  Values (${answer.answer}, ${answer.question_id})
   RETURNING *;
   `;
   return data.rows[0];

@@ -46,15 +46,15 @@ export async function addVote(data: FormData) {
 
 export async function insertAnswer(data: FormData) {
   try {
-    const text = data.get("text");
+    const answer = data.get("answer");
     const question_id = data.get("question_id");
 
-    if (!text || !question_id) {
+    if (!answer || !question_id) {
       throw new Error("Missing text or question_id");
     }
 
     await insertAnswerToDb({
-      text: text.toString(),
+      answer: answer.toString(),
       question_id: question_id.toString(),
     });
     revalidatePath(`/ui/questions/${question_id.toString()}`);

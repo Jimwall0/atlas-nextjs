@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             <h1 className="text-3xl font-black flex items-center">
                 <HashtagIcon className="h-6 w-6 mr-2" /> {singleQuestion.title}
             </h1>
-            <AnswerQuestion text={singleQuestion.id}/>
+            <AnswerQuestion question_id={singleQuestion.id}/>
             {answerlist.map((answers) => (
                 <Answer
                 key={answers.id}
