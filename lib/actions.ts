@@ -2,7 +2,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { insertTopic, insertQuestion, incrementVotes, insertAnswerToDb} from "./data";
+import { insertTopic, insertQuestion, incrementVotes, insertAnswerToDb, markAnswerAsAccepted } from "./data";
 import { redirect } from "next/navigation";
 
 export async function addTopic(data: FormData) {
@@ -62,4 +62,14 @@ export async function insertAnswer(data: FormData) {
     console.error("Failed to add answer", error)
     throw error;
   }
+}
+
+export async function acceptAnsweredAction(formData: FormData) {
+  const question_id = formData.get("question_id")?.toString();
+  const answer_id = formData.get("answer_id")?.toString();
+  if (!question_id || !answer_id) {
+    throw new Error("Missing quesiont_id or answer_id");
+  }
+  await markAnswerAsAccepted(question_id, answer_id);
+  revalidatePath(`/ui/questions/${question_id}`);
 }

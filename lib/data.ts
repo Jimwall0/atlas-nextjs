@@ -108,3 +108,24 @@ export async function insertAnswerToDb(answer: { answer: string; question_id: st
   `;
   return data.rows[0];
 }
+
+export async function markAnswerAsAccepted(question_id: string, answer_id: string) {
+  try {
+    await sql`BEGIN`;
+    await sql`
+    UPDATE answers
+    SET accepted = false
+    WHERE question_id = ${question_id};
+    `;
+    const result = await sql`
+    UPDATE answers
+    SET accepted = true
+    WHERE id = ${answer_id}
+    RETURNING *;
+    `;
+    return result.rows[0];
+  } catch (error) {
+    console.error("Failed to mark answer as accepted", error);
+    throw new Error("Failed to mark answer a accepted");
+  }
+}

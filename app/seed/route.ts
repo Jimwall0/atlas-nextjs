@@ -97,6 +97,11 @@ async function seedAnswers() {
     );
   `;
 
+  await client.sql`
+  ALTER TABLE answers
+  ADD COLUMN IF NOT EXISTS accepted BOOLEAN DEFAULT false;
+  `;
+
   await client.sql`DELETE FROM answers`;
 
   const answers = [
@@ -122,6 +127,7 @@ async function seedAnswers() {
 }
 
 async function clearData() {
+  await client.sql`DROP TABLE IF EXISTS answers`;
   await client.sql`DROP TABLE IF EXISTS questions`;
   await client.sql`DROP TABLE IF EXISTS topics`;
   await client.sql`DROP TABLE IF EXISTS users`;
