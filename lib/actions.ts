@@ -2,7 +2,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { insertTopic, insertQuestion, incrementVotes } from "./data";
+import { insertTopic, insertQuestion, incrementVotes, insertAnswerToDb} from "./data";
 import { redirect } from "next/navigation";
 
 export async function addTopic(data: FormData) {
@@ -41,5 +41,25 @@ export async function addVote(data: FormData) {
   } catch (error) {
     console.error("Database Error:", error);
     throw new Error("Failed to add vote.");
+  }
+}
+
+export async function insertAnswer(data: FormData) {
+  try {
+    const text = data.get("text");
+    const question_id = data.get("question_id");
+
+    if (!text || !question_id) {
+      throw new Error("Missing text or question_id");
+    }
+
+    await insertAnswerToDb({
+      text: text.toString(),
+      question_id: question_id.toString(),
+    });
+    revalidatePath(`/ui/questions/${question_id.toString()}`);
+  } catch (error) {
+    console.error("Failed to add answer", error)
+    throw error;
   }
 }

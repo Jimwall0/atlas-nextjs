@@ -23,6 +23,5 @@ export type Question = {
 export type Answers = {
   id: string;
   question_id: string;
-  text: string;
-  check: boolean;
+  answer: string;
 }
