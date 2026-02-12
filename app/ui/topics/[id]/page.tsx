@@ -18,7 +18,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
       <h1 className="text-3xl font-black flex items-center">
         <HashtagIcon className="h-6 w-6 mr-2" /> {topic.title}
       </h1>
-      
       <AskQuestion topic={topic.id} />
       {questions.map((question) => (
         <Question
